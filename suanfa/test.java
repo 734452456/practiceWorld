@@ -12,12 +12,33 @@ package suanfa;
  */
 public class test {
     public static void main(String[] args) {
+
+
+
+        int num=1234;//1111
+
+
         int[] arr={1,1,1,2,2,2,2,2,3,3,4,45,1,2};
         test t = new test();
-        t.getMembers(arr);
+        int count = t.getCount(num);
+        System.out.println(count);
+        // t.getMembers(arr);
 
     }
-    public void getMembers(int[] arr){
+    public int getCount(int num){
+        int count=0;
+        int eor=0;
+        while (num!=0){
+            eor=num&((~num)+1);
+            if (eor!=0){
+                count++;
+            }
+            num= eor ^ num;
+        }
+        return count;
+
+    }
+  public void getMembers(int[] arr){
         //首先提出仅剩的两个奇数的数   a和b
         int eor=0;
         for (int i=0;i<arr.length;i++){
