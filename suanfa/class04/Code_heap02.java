@@ -1,5 +1,6 @@
 package suanfa.class04;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -64,6 +65,42 @@ public class Code_heap02 {
         public void resign(T s) {
             int indexofvalue = indexMap.get(s);
             heapInert(indexofvalue);
+            heapify(indexofvalue,heapsize);
+
+
+        }
+
+        private void heapify(int index, int heapsize) {
+            int left=index*2+1;
+            while(left<heapsize)
+            {
+                int largest=left+1<heapsize && (comparator.compare(heap.get(left+1),heap.get(left))<0)
+                        ? left+1:left;
+                largest=comparator.compare(heap.get(largest),heap.get(index))<0 ?
+                        largest:index;
+                if(index==largest){
+                    break;
+                }
+                swap(largest,index);
+                index=largest;
+                left=index*2+1;
+
+            }
+        }
+
+        public T pop() {
+            T ans = heap.get(0);
+            int end = heapsize - 1;
+            swap(0,end);
+            heap.remove(end);
+            indexMap.remove(ans);
+            heapify(0,--heapsize);
+            return ans;
+
+        }
+
+        public boolean isEmpty() {
+            return  heapsize==0;
 
         }
     }
@@ -77,6 +114,13 @@ public class Code_heap02 {
     }
 
     public static void main(String[] args) {
+       double c=0.9-0.8;
+        BigDecimal A = new BigDecimal("0.9");
+        BigDecimal B = new BigDecimal("0.8");
+        System.out.println(A.subtract(B).doubleValue());
+        BigDecimal bigDecimal = new BigDecimal(c);
+        System.out.println(bigDecimal);
+
         Student s1=null;
         Student s2=null;
         Student s3=null;
@@ -109,8 +153,12 @@ public class Code_heap02 {
         s2.age=34;
         myHeap.resign(s2);
 
+        while (!myHeap.isEmpty()){
+            Student cur = myHeap.pop();
+            System.out.println(cur.classNo + "," + cur.age + "," + cur.id);
+        }
 
 
 
-    }
+  }
 }
